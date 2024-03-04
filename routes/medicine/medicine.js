@@ -1,12 +1,13 @@
 import express from 'express';
 import Department from '../../db/models/departmentSchema.js';
+import Medicine from '../../db/models/medicineSchema.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const departments = await Department.find();
-    res.status(200).json(departments);
+    const medicines = await Medicine.find();
+    res.status(200).json(medicines);
   } catch (e) {
     res.status(500).json(e);
   }
@@ -14,8 +15,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const departments = await Department.create(req.body);
-    res.status(200).json(departments);
+    const medicines = await Medicine.create(req.body);
+    res.status(200).json({ message: 'Medicine added', Medicine: Medicine });
   } catch (e) {
     res.status(500).json(e);
   }
@@ -24,8 +25,8 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const departments = await Department.findById(id);
-    res.status(200).json(departments);
+    const medicines = await Medicine.findById(id);
+    res.status(200).json(medicines);
   } catch (e) {
     res.status(500).json(e);
   }
@@ -33,10 +34,8 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const departments = await Department.updateById(id);
-    res
-      .status(200)
-      .json({ message: 'Department Updated', Department: departments });
+    const medicines = await Medicine.updateById(id);
+    res.status(200).json({ message: 'Medicine Updated', Medicine: Medicine });
   } catch (e) {
     res.status(500).json(e);
   }
@@ -44,10 +43,8 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const departments = await Department.DeleteById(id);
-    res
-      .status(200)
-      .json({ message: 'Department Deleted', Department: departments });
+    const medicines = await Medicine.DeleteById(id);
+    res.status(200).json({ message: 'Medicine Deleted', Medicine: Medicine });
   } catch (e) {
     res.status(500).json(e);
   }
