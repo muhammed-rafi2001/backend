@@ -1,18 +1,21 @@
 import express from 'express';
+import Department from '../../db/models/departmentSchema.js';
 
 const router = express.Router();
 
-router.get('/data', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    res.status(200).json({ message: 'Data Page' });
+    const departments = await Department.find();
+    res.status(200).json(departments);
   } catch (e) {
     res.status(500).json(e);
   }
 });
 
-router.post('/data', (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    res.status(200).json({ message: 'Post Page' });
+    const departments = await Department.create(req.body);
+    res.status(200).json(departments);
   } catch (e) {
     res.status(500).json(e);
   }
