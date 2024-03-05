@@ -47,7 +47,7 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const mediPrescriptioncines = await Prescription.DeleteById(id);
+    const Prescription = await Prescription.DeleteById(id);
     res
       .status(200)
       .json({ message: 'Prescription deleted', Prescription: Prescription });
