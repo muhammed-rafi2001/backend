@@ -6,8 +6,8 @@ const router = express.Router();
 //crud and by id
 router.get('/', async (req, res) => {
   try {
-    const Doctor = await Doctor.find();
-    res.status(200).json(Doctor);
+    const Doctors = await Doctor.find();
+    res.status(200).json(Doctors);
   } catch (e) {
     res.status(500).json(e);
   }
@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const Doctor = await Doctor.create(req.body);
-    res.status(200).json({ message: 'Doctor added', Doctor: Doctor });
+    const Doctors = await Doctor.create(req.body);
+    res.status(200).json({ message: 'Doctor added', Doctor: Doctors });
   } catch (e) {
     res.status(500).json(e);
   }
@@ -25,8 +25,8 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const Doctor = await Doctor.findById(id);
-    res.status(200).json(Doctor);
+    const Doctors = await Doctor.findById(id);
+    res.status(200).json(Doctors);
   } catch (e) {
     res.status(500).json(e);
   }
@@ -34,8 +34,8 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const Doctor = await Doctor.updateById(id);
-    res.status(200).json({ message: 'Doctor updated', Doctor: Doctor });
+    const Doctors = await Doctor.findByIdAndUpdate(id);
+    res.status(200).json({ message: 'Doctor updated', Doctor: Doctors });
   } catch (e) {
     res.status(500).json(e);
   }
@@ -43,8 +43,8 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const Doctor = await Doctor.DeleteById(id);
-    res.status(200).json({ message: 'Doctor deleted', Doctor: Doctor });
+    const Doctors = await Doctor.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Doctor deleted', Doctor: Doctors });
   } catch (e) {
     res.status(500).json(e);
   }

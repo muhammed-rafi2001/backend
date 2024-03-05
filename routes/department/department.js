@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const departments = await Department.updateById(id);
+    const departments = await Department.findByIdAndUpdate(id);
     res
       .status(200)
       .json({ message: 'Department Updated', Department: departments });
@@ -44,7 +44,7 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const departments = await Department.DeleteById(id);
+    const departments = await Department.findByIdAndDelete(id);
     res
       .status(200)
       .json({ message: 'Department Deleted', Department: departments });
