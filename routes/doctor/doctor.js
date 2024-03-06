@@ -1,52 +1,44 @@
 import express from 'express';
 import Doctor from '../../db/models/doctorSchema.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-//crud and by id
-router.get('/', async (req, res) => {
-  try {
-    const Doctors = await Doctor.find();
-    res.status(200).json(Doctors);
-  } catch (e) {
-    res.status(500).json(e);
+router.post('/signup', async (req, res) => {
+  const body = { ...req.body };
+  const doctor = await Doctor.findOne({ email: body.email });
+  if (doctor) {
+    return res.status(400).json({ error: 'Email already exists' });
   }
+  if (body.password != body.confirmPassword) {
+    return res.status(400).json({ error: 'Password does not match' });
+  }
+  const hashedPassword = await bcrypt.hash(body.password, 2);
+  body.password = hashedPassword;
+
+  const newDoctor = await Doctor.create(body);
+  return res
+    .status(200)
+    .json({ message: 'sign up successfull', doctor: newDoctor });
+});
+router.post('/login', async (req, res) => {
+  const body = { ...req.body };
+  const doctor = await Doctor.findOne({ email: body.email });
+  if (!doctor) {
+    return res.status(400).json({ error: 'email or password incorrect' });
+  }
+  const isMatching = await bcrypt.compare(body.password, doctor.password);
+  if (!isMatching) {
+    return res.status(400).json({ error: 'email or password incorrect' });
+  }
+  const key = 'hquwhr328r2rjkwhr49rhwoefk0w3rahfksdfh0r049ror';
+  const token = jwt.sign({ role: 'DOCTOR', id: doctor._id }, key, {
+    expiresIn: '7d',
+  });
+  console.log(isMatching);
+  console.log(token);
+  res.status(200).json({ message: 'Login Successfull' });
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const Doctors = await Doctor.create(req.body);
-    res.status(200).json({ message: 'Doctor added', Doctor: Doctors });
-  } catch (e) {
-    res.status(500).json(e);
-  }
-});
-
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const Doctors = await Doctor.findById(id);
-    res.status(200).json(Doctors);
-  } catch (e) {
-    res.status(500).json(e);
-  }
-});
-router.patch('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const Doctors = await Doctor.findByIdAndUpdate(id);
-    res.status(200).json({ message: 'Doctor updated', Doctor: Doctors });
-  } catch (e) {
-    res.status(500).json(e);
-  }
-});
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const Doctors = await Doctor.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Doctor deleted', Doctor: Doctors });
-  } catch (e) {
-    res.status(500).json(e);
-  }
-});
 export default router;
