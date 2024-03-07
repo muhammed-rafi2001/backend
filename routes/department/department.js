@@ -4,7 +4,7 @@ import checkToken from '../../middlewares/checkToken.js';
 
 const router = express.Router();
 
-router.get('/', checkToken, async (req, res) => {
+router.get('/', checkToken(['DOCTOR', 'USER']), async (req, res) => {
   try {
     const departments = await Department.find();
     res.status(200).json(departments);

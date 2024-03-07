@@ -17,6 +17,7 @@ const schema = Schema(
     status: {
       type: String,
       enum: ['BOOKED', 'DONE', 'CANCELLED'],
+      default: 'BOOKED',
     },
   },
   { timestamps: true }
