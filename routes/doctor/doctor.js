@@ -36,8 +36,8 @@ router.post('/login', async (req, res) => {
   const token = jwt.sign({ role: 'DOCTOR', id: doctor._id }, key, {
     expiresIn: '7d',
   });
-  console.log(isMatching);
-  console.log(token);
+  // console.log(isMatching);
+  // console.log(token);
   res.status(200).json({ message: 'Login Successfull' });
 });
 //doctor by department

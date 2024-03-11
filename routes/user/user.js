@@ -35,8 +35,8 @@ router.post('/login', async (req, res) => {
   const token = jwt.sign({ role: 'USER', id: user._id }, key, {
     expiresIn: '7d',
   });
-  console.log(isMatching);
-  console.log(token);
+  // console.log(isMatching);
+  // console.log(token);
   res.status(200).json({ message: 'Login Successfull' });
 });
 //edit user profile
