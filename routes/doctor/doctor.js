@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
   if (!isMatching) {
     return res.status(400).json({ error: 'email or password incorrect' });
   }
-  const key = 'hquwhr328r2rjkwhr49rhwoefk0w3rahfksdfh0r049ror';
+  const key = process.env.SECRET_KEY;
   const token = jwt.sign({ role: 'DOCTOR', id: doctor._id }, key, {
     expiresIn: '7d',
   });

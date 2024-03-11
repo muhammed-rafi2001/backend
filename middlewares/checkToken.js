@@ -9,10 +9,7 @@ const checkToken = roleArray => {
     const token = splitToken[1];
     console.log(token);
     try {
-      const decoded = jwt.verify(
-        token,
-        'hquwhr328r2rjkwhr49rhwoefk0w3rahfksdfh0r049ror'
-      );
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
       if (!roleArray.includes(decoded.role)) {
         return res.status(403).json({ error: 'You are not authorized' });
       }
