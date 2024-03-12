@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
   });
   // console.log(isMatching);
   // console.log(token);
-  res.status(200).json({ message: 'Login Successfull' });
+  res.status(200).json({ message: 'Login Successfull', token });
 });
 //doctor by department
 

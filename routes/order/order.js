@@ -49,7 +49,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(e);
   }
 });
-//list user by userid
+//list order by userid
 router.get('/user/:id', checkToken(['USER']), async (req, res) => {
   const { id } = req.params;
   const orders = await Order.find({ user: id });
